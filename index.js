@@ -9,6 +9,10 @@ const password = '73ad5849b066f1d8';
 
 const bot = new TelegramBot(telegramToken, { polling: false });
 
+function bytesToGB(bytes) {
+    return (bytes / (1024 ** 3)).toFixed(2); // 1 GB = 1024^3 bytes
+  }
+
 async function fetchAndSend() {
   try {
 
@@ -28,7 +32,32 @@ async function fetchAndSend() {
         axios.request(config)
         .then((response) => {
             console.log(JSON.stringify(response.data));
-            bot.sendMessage(chatId, JSON.stringify(response.data.traffic_left));
+            const data = response.data;
+
+            // Extract and convert values
+            const totalTrafficGB = bytesToGB(data.total_traffic);
+            const usedTrafficGB = bytesToGB(data.traffic_used);
+            const leftTrafficGB = bytesToGB(data.traffic_left);
+            const usedThreads = data.used_threads;
+            const login = data.login;
+            const status = data.status;
+
+            // Create a nice message with Markdown formatting
+            const message = `
+        📊 *Traffic Report* 📊
+
+        👤 *User*: \`${login}\`
+        🟢 *Status*: *${status}*
+
+        📈 *Total Traffic*: *${totalTrafficGB} GB*
+        📉 *Used Traffic*: *${usedTrafficGB} GB*
+        🛡️ *Remaining Traffic*: *${leftTrafficGB} GB*
+
+        🧵 *Used Threads*: *${usedThreads}*
+
+        ⏱️ _Data refreshed just now_
+            `;
+            bot.sendMessage(chatId, message, { parse_mode: 'Markdown' });
             console.log('Message sent!');
         })
         .catch((error) => {
