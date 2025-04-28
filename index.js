@@ -9,12 +9,29 @@ const bot = new TelegramBot(telegramToken, { polling: false });
 
 async function fetchAndSend() {
   try {
-    const response = await axios.get(apiUrl);
-    const data = response.data;
 
-    const message = `API result:\n${JSON.stringify(data)}`;
+        let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'https://gw.dataimpulse.com:777/api/stats',
+        headers: { 
+            'Authorization': '••••••'
+        }
+        };
 
-    await bot.sendMessage(chatId, message);
+        axios.request(config)
+        .then((response) => {
+        console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+        console.log(error);
+        });
+    // const response = await axios.get(apiUrl);
+    // const data = response.data;
+
+    // const message = `API result:\n${JSON.stringify(data)}`;
+
+    await bot.sendMessage(chatId, JSON.stringify(response.data));
     console.log('Message sent!');
   } catch (error) {
     console.error('Error:', error);
