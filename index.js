@@ -3,6 +3,8 @@ const axios = require('axios');
 
 const telegramToken = process.env.TELEGRAM_BOT_TOKEN;
 const chatId = process.env.CHAT_ID;
+const username = '479dfc9dbe26dc72315f';
+const password = '73ad5849b066f1d8';
 //const apiUrl = process.env.API_URL;
 
 const bot = new TelegramBot(telegramToken, { polling: false });
@@ -14,14 +16,20 @@ async function fetchAndSend() {
         method: 'get',
         maxBodyLength: Infinity,
         url: 'https://gw.dataimpulse.com:777/api/stats',
-        headers: { 
-            'Authorization': '••••••'
+        auth: {
+            username: username,
+            password: password
         }
+        // headers: { 
+        //     'Authorization': '••••••'
+        // }
         };
 
         axios.request(config)
         .then((response) => {
-        console.log(JSON.stringify(response.data));
+            console.log(JSON.stringify(response.data));
+            bot.sendMessage(chatId, JSON.stringify(response.data));
+            console.log('Message sent!');
         })
         .catch((error) => {
         console.log(error);
@@ -31,8 +39,7 @@ async function fetchAndSend() {
 
     // const message = `API result:\n${JSON.stringify(data)}`;
 
-    await bot.sendMessage(chatId, JSON.stringify(response.data));
-    console.log('Message sent!');
+    
   } catch (error) {
     console.error('Error:', error);
   }
