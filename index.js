@@ -28,7 +28,7 @@ async function fetchAndSend() {
         axios.request(config)
         .then((response) => {
             console.log(JSON.stringify(response.data));
-            bot.sendMessage(chatId, JSON.stringify(response.data));
+            bot.sendMessage(chatId, JSON.stringify(response.data.traffic_left));
             console.log('Message sent!');
         })
         .catch((error) => {
