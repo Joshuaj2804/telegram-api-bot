@@ -3,7 +3,7 @@ const axios = require('axios');
 
 const telegramToken = process.env.TELEGRAM_BOT_TOKEN;
 const chatId = process.env.CHAT_ID;
-const apiUrl = process.env.API_URL;
+//const apiUrl = process.env.API_URL;
 
 const bot = new TelegramBot(telegramToken, { polling: false });
 
