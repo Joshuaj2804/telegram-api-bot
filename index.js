@@ -1,7 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
 
-const telegramToken = "7564573767:AAHnTxS8mT0kzvsZl_fK0v8MUOAwLcsYvgY";
+const telegramToken = "7564573767:AAHIcLUzJd3oX-ey1EgoWu6Wfy8vzpqIvmw";
 const chatId = "-4701973449";
 const username = '479dfc9dbe26dc72315f';
 const password = '73ad5849b066f1d8';
